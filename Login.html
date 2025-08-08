@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EBF Traders - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #555;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background: #444;
+            max-width: 350px;
+            margin: 60px auto 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            padding: 30px 25px 25px 25px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .brand-logo {
+            font-size: 2.2rem;
+            color: #ff3333;
+            font-weight: bold;
+            margin-right: 10px;
+            letter-spacing: 2px;
+        }
+        .brand-sub {
+            color: #fff;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+        label {
+            color: #fff;
+            margin-top: 15px;
+            display: block;
+            font-size: 1rem;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 7px;
+            border: 1px solid #888;
+            border-radius: 4px;
+            font-size: 1rem;
+            background: #eee;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px 0;
+            background: #ff3333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+        button:active {
+            background: #b30000;
+        }
+        .footer {
+            text-align: center;
+            color: #bbb;
+            margin-top: 18px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 500px) {
+            .login-container {
+                margin: 30px 8px 0 8px;
+                padding: 18px 8px 18px 8px;
+            }
+            h2 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="brand">
+            <span class="brand-logo">EBF</span>
+            <span class="brand-sub">Traders</span>
+        </div>
+        <h2>Login to your account</h2>
+        <form id="loginForm" autocomplete="off">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <label for="redirectPage">Redirect to</label>
+            <select id="redirectPage" name="redirectPage" required>
+                <option value="Employee.html">Employee Section</option>
+                <option value="dashboard.html">Dashboard</option>
+            </select>
+            <button type="submit">LOGIN</button>
+        </form>
+        <div id="loaderBox" style="display:none; text-align:center; margin-top:30px;">
+            <div style="margin-bottom:15px;">
+                <!-- Loader Bar -->
+                <div id="loaderBarContainer" style="width:90%;height:18px;background:#222;border-radius:8px;margin:auto;overflow:hidden;box-shadow:0 1px 4px #0003;">
+                    <div id="loaderBar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff3333,#ffb133);transition:width 0.6s;"></div>
+                </div>
+            </div>
+            <div id="loaderPercent" style="font-size:1.3rem; color:#fff; font-weight:bold;">0%</div>
+            <div id="loaderText" style="color:#bbb; margin-top:8px;">Initializing...</div>
+        </div>
+        <div class="footer">
+            &copy; 2025 EBF Traders
+        </div>
+    </div>
+    <script>
+        const validUser = "ebfshahbaz01";
+        const validPass = "Admin@123";
+        const loginForm = document.getElementById('loginForm');
+        const loaderBox = document.getElementById('loaderBox');
+        const loaderPercent = document.getElementById('loaderPercent');
+        const loaderText = document.getElementById('loaderText');
+        const loaderBar = document.getElementById('loaderBar');
+
+        const loaderSteps = [
+            { percent: 10, text: "Checking credentials..." },
+            { percent: 25, text: "Loading user profile..." },
+            { percent: 45, text: "Connecting to server..." },
+            { percent: 65, text: "Fetching dashboard data..." },
+            { percent: 85, text: "Almost done..." },
+            { percent: 100, text: "Login successful! Redirecting..." }
+        ];
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const redirectPage = document.getElementById('redirectPage').value;
+            if (username === validUser && password === validPass) {
+                loginForm.style.display = "none";
+                loaderBox.style.display = "block";
+                let step = 0;
+                function nextStep() {
+                    if (step < loaderSteps.length) {
+                        loaderPercent.textContent = loaderSteps[step].percent + "%";
+                        loaderText.textContent = loaderSteps[step].text;
+                        loaderBar.style.width = loaderSteps[step].percent + "%";
+                        step++;
+                        setTimeout(nextStep, step === loaderSteps.length ? 1200 : 1800);
+                    } else {
+                        setTimeout(function() {
+                            loaderText.textContent = "Welcome!";
+                            loaderBar.style.width = "100%";
+                            window.location.href = redirectPage;
+                        }, 1000);
+                    }
+                }
+                nextStep();
+            } else {
+                alert("Invalid username or password!");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - SHABBY wears & Collection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #444;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard-container {
+            max-width: 500px;
+            margin: 60px auto 0 auto;
+            padding: 30px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+            text-align: center;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .brand-logo {
+            font-size: 2.2rem;
+            color: #ff3333;
+            font-weight: bold;
+            margin-right: 10px;
+            letter-spacing: 2px;
+        }
+        .brand-sub {
+            color: #222;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+        .blue-box {
+            background: #2196f3;
+            color: #fff;
+            border-radius: 10px;
+            padding: 30px 0 20px 0;
+            margin: 0 auto 20px auto;
+            max-width: 350px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.15);
+        }
+        .blue-box h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+        .blue-box .emp-count {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+        .footer {
+            text-align: center;
+            color: #bbb;
+            margin-top: 28px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 600px) {
+            .dashboard-container {
+                max-width: 98vw;
+                margin: 20px 2vw 0 2vw;
+                padding: 12px 4vw;
+            }
+            .brand-logo {
+                font-size: 1.3rem;
+                margin-right: 6px;
+            }
+            .brand-sub {
+                font-size: 0.95rem;
+            }
+            .blue-box {
+                max-width: 100%;
+                padding: 18px 0 12px 0;
+            }
+            .blue-box h2 {
+                font-size: 1.1rem;
+            }
+            .blue-box .emp-count {
+                font-size: 2rem;
+            }
+            .footer {
+                font-size: 0.85rem;
+                margin-top: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="brand">
+            <span class="brand-logo">SHABBY</span>
+            <span class="brand-sub">wears &amp; Collection</span>
+        </div>
+        <div class="blue-box">
+            <h2>Total Employees</h2>
+            <div class="emp-count" id="empCount">0</div>
+        </div>
+        <div class="footer">
+            &copy; 2025 SHABBY wears &amp; Collection
+        </div>
+    </div>
+    <script>
+        // Get employees from localStorage and update count
+        function updateEmployeeCount() {
+            const employees = JSON.parse(localStorage.getItem('employees') || "[]");
+            document.getElementById('empCount').textContent = employees.length;
+        }
+        updateEmployeeCount();
+        // Optional: update count if localStorage changes in another tab
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'employees') updateEmployeeCount();
+        });
+    </script>
+</body>
+</html>
